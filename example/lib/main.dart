@@ -56,13 +56,17 @@ class _MyAppState extends State<MyApp> {
 
   void _onClickActionButton() async {
     if (session == 0) {
-      session = await _flutterEmailPlugin.newSession(
-          "webmail.zenmen.com", "kongpf@zenmen.com", "xxx", "zenmen");
+      session = await _flutterEmailPlugin.newSession("webmail.zenmen.com",
+          "kongpf@zenmen.com", "God3\$Mfc123789", "zenmen");
       print('++++++++++++++$session');
     } else if (inboxId == null || inboxId!.isEmpty) {
       var result = await _flutterEmailPlugin.checkAccount(session!);
       print('++++++++++++++email_check_account:$result');
-      inboxId = "haha";
+      if (result != null) {
+        final data = jsonDecode(result);
+        inboxId = data["inbox"];
+        print('++++++++++++++inboxId:$inboxId');
+      }
     } else {
       var result = await _flutterEmailPlugin.getFolders(session!);
       print('++++++++++++++email_get_folders:$result');
