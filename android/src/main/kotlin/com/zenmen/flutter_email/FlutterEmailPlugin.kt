@@ -14,7 +14,7 @@ class FlutterEmailPlugin : FlutterPlugin, MethodCallHandler {
     private lateinit var channel: MethodChannel
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "zenmen_flutter_email")
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, CHANNEL_NAME)
         channel.setMethodCallHandler(this)
     }
 
@@ -47,7 +47,7 @@ class FlutterEmailPlugin : FlutterPlugin, MethodCallHandler {
 
     companion object {
         //渠道名称
-        private const val CHANNEL_NAME = "zen_men_flutter_email"
+        private const val CHANNEL_NAME = "zenmen_flutter_email"
 
         //生成session
         private const val METHOD_NEW_SESSION = "email_new_session"
