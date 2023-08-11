@@ -19,7 +19,7 @@ class MethodChannelFlutterEmail extends FlutterEmailPlatform {
   Future<num?> newSession(
       String url, String address, String password, String domain) async {
     final session = await methodChannel.invokeMethod<num>(
-        'email_new_session', <String, dynamic>{
+        'ews_new_session', <String, dynamic>{
       'url': url,
       'address': address,
       'password': password,
@@ -31,14 +31,14 @@ class MethodChannelFlutterEmail extends FlutterEmailPlatform {
   @override
   Future<String?> checkAccount(num session) async {
     final result = await methodChannel.invokeMethod<String>(
-        'email_check_account', <String, dynamic>{'session': session});
+        'ews_check_account', <String, dynamic>{'session': session});
     return result;
   }
 
   @override
   Future<String?> getFolders(num session) async {
     final result = await methodChannel.invokeMethod<String>(
-        'email_get_folders', <String, dynamic>{'session': session});
+        'ews_get_folders', <String, dynamic>{'session': session});
     return result;
   }
 }

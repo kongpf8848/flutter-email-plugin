@@ -50,12 +50,12 @@ class FlutterEmailPlugin : FlutterPlugin, MethodCallHandler {
         private const val CHANNEL_NAME = "zenmen_flutter_email"
 
         //生成session
-        private const val METHOD_NEW_SESSION = "email_new_session"
+        private const val METHOD_NEW_SESSION = "ews_new_session"
 
         //检查账户是否可用
-        private const val METHOD_CHECK_ACCOUNT = "email_check_account"
+        private const val METHOD_CHECK_ACCOUNT = "ews_check_account"
 
         //获取文件夹列表
-        private const val METHOD_GET_FOLDERS = "email_get_folders"
+        private const val METHOD_GET_FOLDERS = "ews_get_folders"
     }
 }
