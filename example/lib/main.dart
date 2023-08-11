@@ -56,8 +56,8 @@ class _MyAppState extends State<MyApp> {
 
   void _onClickActionButton() async {
     if (session == 0) {
-      session = await _flutterEmailPlugin.newSession("webmail.zenmen.com",
-          "kongpf@zenmen.com", "God3\$Mfc123789", "zenmen");
+      session = await _flutterEmailPlugin.newSession(
+          "webmail.zenmen.com", "kongpf@zenmen.com", "xxxx", "zenmen");
       print('++++++++++++++$session');
     } else if (inboxId == null || inboxId!.isEmpty) {
       var result = await _flutterEmailPlugin.checkAccount(session!);

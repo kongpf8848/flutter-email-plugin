@@ -1,11 +1,17 @@
 PODS:
+  - CZCore (0.1.1)
   - Flutter (1.0.0)
   - flutter_email (0.0.1):
     - Flutter
 
 DEPENDENCIES:
+  - CZCore (= 0.1.1)
   - Flutter (from `Flutter`)
   - flutter_email (from `.symlinks/plugins/flutter_email/ios`)
+
+SPEC REPOS:
+  https://code.y5ops.com/mailbus-app/podspecs.git:
+    - CZCore
 
 EXTERNAL SOURCES:
   Flutter:
@@ -14,9 +20,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_email/ios"
 
 SPEC CHECKSUMS:
+  CZCore: f49852d34b4a62e00b5765b903d409b21342af31
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_email: d77c4cb5030a4b2887429690b57b9279de68f8a0
 
-PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3
+PODFILE CHECKSUM: 2f3314cca4f9e2be4d74264db56fb469c74bf8fc
 
 COCOAPODS: 1.12.1
