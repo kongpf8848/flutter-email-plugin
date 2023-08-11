@@ -24,7 +24,7 @@ import Flutter
               ewsChannel.setMethodCallHandler { [weak self] (call, result) in
                   switch call.method {
                   case "ews_new_session":
-                      let session=CZExchange.newSession(uri: "webmail.zenmen.com", email: "kongpf@zenmen.com", password:"God3$Mfc123789" ,domain:"zenmen")
+                      let session=CZExchange.newSession(uri: "webmail.zenmen.com", email: "kongpf@zenmen.com", password:"xxx" ,domain:"zenmen")
                       result(session);
                   default:
                       result(FlutterMethodNotImplemented)
