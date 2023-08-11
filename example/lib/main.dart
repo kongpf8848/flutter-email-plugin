@@ -60,12 +60,14 @@ class _MyAppState extends State<MyApp> {
       session = await platform.invokeMethod("ews_new_session", {
         'url': 'webmail.zenmen.com',
         'address': 'kongpf@zenmen.com',
-        'password': 'xxx',
+        'password': 'God3\$Mfc123789',
         'domain': 'zenmen'
       });
-      print('++++++++++++++$session');
+      print('++++++++++++++session:$session');
     } else if (inboxId == null || inboxId!.isEmpty) {
-      var result = await _flutterEmailPlugin.checkAccount(session!);
+      var result = await platform.invokeMethod("ews_check_account", {
+        'session': session,
+      });
       print('++++++++++++++email_check_account:$result');
       if (result != null) {
         final data = jsonDecode(result);
@@ -73,7 +75,9 @@ class _MyAppState extends State<MyApp> {
         print('++++++++++++++inboxId:$inboxId');
       }
     } else {
-      var result = await _flutterEmailPlugin.getFolders(session!);
+      var result = await platform.invokeMethod("ews_get_folders", {
+        'session': session,
+      });
       print('++++++++++++++email_get_folders:$result');
     }
   }

@@ -13,6 +13,8 @@ import Flutter
               
               CZExchange.exchangeInit()
       
+             
+              
       
               let flutterViewController: FlutterViewController = window.rootViewController as! FlutterViewController
               
@@ -21,15 +23,36 @@ import Flutter
               
               GeneratedPluginRegistrant.register(with: self)
            
-              ewsChannel.setMethodCallHandler { [weak self] (call, result) in
+              ewsChannel.setMethodCallHandler { [weak self] (call:FlutterMethodCall, result) in
                   switch call.method {
-                  case "ews_new_session":
-                      let session=CZExchange.newSession(uri: "webmail.zenmen.com", email: "kongpf@zenmen.com", password:"xxx" ,domain:"zenmen")
-                      result(session);
-                  default:
-                      result(FlutterMethodNotImplemented)
+                      case "ews_new_session":
+                          let arguments = call.arguments as! [String: Any]
+                          let url = arguments["url"] as! String
+                          let address=arguments["address"] as! String
+                          let password=arguments["password"] as! String
+                          let domain=arguments["domain"] as! String
+                          let pointer=CZExchange.newSession(uri: url, email: address, password:password ,domain:domain)
+                          let session = self!.convertPointerToUInt64(pointer:pointer)
+                          result(session);
+                      case "ews_check_account":
+                          let arguments = call.arguments as! [String: Any]
+                          var session = arguments["session"] as! UInt64
+                          let response=CZExchange.checkAccount(sess: UnsafeMutableRawPointer(&session))
+                          result(response)
+                      case "ews_get_folders":
+                          let arguments = call.arguments as! [String: Any]
+                          var session = arguments["session"] as! UInt64
+                          let response=CZExchange.getFolders(sess: UnsafeMutableRawPointer(&session))
+                          result(response)
+                      default:
+                          result(FlutterMethodNotImplemented)
                   }
               }
              return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  }
+
+  func convertPointerToUInt64(pointer: UnsafeMutableRawPointer?) -> UInt64? {
+    let convertedValue = pointer?.assumingMemoryBound(to: UInt64.self).pointee
+    return convertedValue
   }
 }
