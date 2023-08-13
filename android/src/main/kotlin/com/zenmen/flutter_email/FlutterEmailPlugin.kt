@@ -8,6 +8,10 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import com.chirpeur.chirpmail.jniutil.JniUtils
+import android.content.Context
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 class FlutterEmailPlugin : FlutterPlugin, MethodCallHandler {
 
@@ -16,6 +20,36 @@ class FlutterEmailPlugin : FlutterPlugin, MethodCallHandler {
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, CHANNEL_NAME)
         channel.setMethodCallHandler(this)
+
+        val caBundleFile = extractAsset(flutterPluginBinding.applicationContext,R.raw.cacert20190123_z, "ews", "ca_bundle_z.pem")
+        JniUtils.startUp(caBundleFile.absolutePath, 1)
+        JniUtils.czcryptoInit()
+    }
+
+     private fun extractAsset(context:Context,resId: Int, folderName: String, fileName: String): File {
+        val cacheFolder = File(context.cacheDir, folderName)
+        if (!cacheFolder.exists()) {
+            cacheFolder.mkdirs()
+        }
+        val outputFile = File(cacheFolder, fileName)
+        if (!outputFile.exists() || outputFile.length() <= 0) {
+            val buffer = ByteArray(2 * 1024 * 1024)
+            var byteCount = 0
+            try {
+                val `is` = context.resources.openRawResource(resId)
+                val fos = FileOutputStream(outputFile)
+                while (`is`.read(buffer).also { byteCount = it } != -1) {
+                    fos.write(buffer, 0, byteCount)
+                }
+                fos.flush()
+                `is`.close()
+                fos.close()
+            } catch (e: IOException) {
+                outputFile.delete()
+                e.printStackTrace()
+            }
+        }
+        return outputFile
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
